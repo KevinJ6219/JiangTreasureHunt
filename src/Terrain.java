@@ -39,7 +39,7 @@ public class Terrain
      */
     public boolean canCrossTerrain(Hunter hunter)
     {
-        if(hunter.hasItemInKit(neededItem))
+        if(hunter.hasItem(neededItem, hunter.getKit()))
         {
             return true;
         }

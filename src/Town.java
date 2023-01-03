@@ -12,7 +12,7 @@ public class Town
     private String printMessage;
     private boolean toughTown;
     private Treasure treasure;
-
+    private double toughness;
     private int winCondition;
     //Constructor
     /**
@@ -33,7 +33,7 @@ public class Town
 
         // higher toughness = more likely to be a tough town
         toughTown = (Math.random() < toughness);
-
+        this.toughness = toughness;
         treasure = new Treasure();
         winCondition = 0;
     }
@@ -119,6 +119,9 @@ public class Town
         {
             printMessage = "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n";
             int goldDiff = (int)(Math.random() * 10) + 1;
+            if (toughness == 0.1) {
+                goldDiff = (int) Math.random() * 20) + 1;
+            }
             if (Math.random() > noTroubleChance)
             {
                 printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold.";

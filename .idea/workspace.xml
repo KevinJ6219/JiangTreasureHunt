@@ -7,7 +7,7 @@
     <list default="true" id="7d707892-46c3-454f-b49c-6ac940c81d24" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Hunter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hunter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Terrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shop.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Town.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Town.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Treasure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Treasure.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TreasureHunter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TreasureHunter.java" afterDir="false" />

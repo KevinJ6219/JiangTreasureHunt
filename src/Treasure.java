@@ -1,32 +1,36 @@
 public class Treasure {
-    public static final String CROWN = "Crown";
-    public static final String CAPE= "Cape";
-    public static final String RING = "ring";
-    public static final String NOTHING = "nothing";
+    public static final String GEM = "Gems";
+    public static final String TROPHY = "the Trophy";
+    public static final String CROWN = "the Crown";
+    public static final String DUST = "Dust";
 
-    private String treasure;
+    private String type;
 
     public Treasure() {
         int random = (int) (Math.random() * 3) + 1;
         if (random == 1) {
-            treasure = CROWN;
+            type = GEM;
         }
         else if (random == 2) {
-            treasure = CAPE;
+            type = TROPHY;
         }
         else if (random == 3) {
-            treasure = RING;
+            type = CROWN;
         }
         else if (random == 4) {
-            treasure = NOTHING;
+            type = DUST;
         }
     }
 
-    public static boolean hasAllTreasures(String collection) {
-        return ((collection.indexOf(CROWN) != -1) && (collection.indexOf(CAPE) != -1) && (collection.indexOf(RING) != -1));
+    public static boolean collectionHasAllTreasures(String collection) {
+        boolean hasGem = (collection.indexOf(GEM) != -1);
+        boolean hasTrophy = (collection.indexOf(TROPHY) != -1);
+        boolean hasCrown = (collection.indexOf(CROWN) != -1);
+
+        return (hasGem && hasTrophy && hasCrown);
     }
-    public String getTreasure() {
-        return treasure;
+    public String getType() {
+        return type;
     }
 
 }

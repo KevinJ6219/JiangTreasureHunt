@@ -11,21 +11,20 @@ public class Town
     private Terrain terrain;
     private String printMessage;
     private boolean toughTown;
-    private int winCondition;
-
     private Treasure treasure;
 
+    private int winCondition;
     //Constructor
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
-     * @param s The town's shoppe.
-     * @param t The surrounding terrain.
+     * @param shop The town's shoppe.
+     * @param terrain The surrounding terrain.
      */
     public Town(Shop shop, double toughness)
     {
         this.shop = shop;
         this.terrain = getNewTerrain();
-        this.treasure = new Treasure();
+
         // the hunter gets set using the hunterArrives method, which
         // gets called from a client class
         hunter = null;
@@ -34,9 +33,14 @@ public class Town
 
         // higher toughness = more likely to be a tough town
         toughTown = (Math.random() < toughness);
+
+        treasure = new Treasure();
         winCondition = 0;
     }
 
+    public int getWinCondition() {
+        return winCondition;
+    }
     public String getLatestNews()
     {
         return printMessage;
@@ -135,28 +139,6 @@ public class Town
             }
         }
     }
-    public void huntForTreasure() {
-        String treasureStr = treasure.getTreasure();
-
-        String message = "You search the town for treasure... and find " + treasureStr;
-
-        if (treasureStr.equals(Treasure.NOTHING)) {
-            message += "\nWell you can't do anything with nothing";
-        }
-        else {
-            if (hunter.collectTreasure(treasure)) {
-                message += "\nThat's a new one! You pick it up and add it to your treasure collection.";
-                if (Treasure.hasAllTreasures(hunter.getTreasureCollection())) {
-                    winCondition = 1;
-                }
-            }
-            else {
-                message += "\nYou have one of those already, who needs two?! You put it back.";
-            }
-
-        }
-
-    }
 
     public String toString()
     {
@@ -203,7 +185,26 @@ public class Town
         return (rand < 0.5);
     }
 
-    public int getWinCondition() {
-        return winCondition;
+    public void huntForTreasure() {
+        String treasureStr = treasure.getType();
+
+        printMessage = "You search the own for treausre... and find " + treasureStr;
+
+        if (treasureStr.equals(Treasure.DUST)) {
+            printMessage += ("\nAhhhchoo! That dust is mighty dusty, and it's certainly no treasure!");
+        }
+        else {
+            if (hunter.collectTreasure(treasure)) {
+                printMessage += ("\nThat's a new one! You pick it up and add it to your treasure collection.");
+
+                if (Treasure.collectionHasAllTreasures(hunter.getTreasureCollection())) {
+                    winCondition = 1;
+                }
+            }
+            else {
+                printMessage += ("\nYou have one of those already, who needs two?! You put it back.");
+            }
+        }
+
     }
 }

@@ -23,8 +23,8 @@ public class Hunter
     public Hunter(String hunterName, int startingGold)
     {
         this.hunterName = hunterName;
-        treasureCollection = "";
         kit = "";
+        treasureCollection = "";
         gold = startingGold;
     }
 
@@ -32,6 +32,10 @@ public class Hunter
     public String getHunterName()
     {
         return hunterName;
+    }
+
+    public String getTreasureCollection() {
+        return treasureCollection;
     }
 
     public String getKit()
@@ -44,32 +48,6 @@ public class Hunter
         return gold;
     }
 
-    public String getTreasureCollection() {
-        return treasureCollection;
-    }
-
-    public boolean hasItem(String item, String inventory) {
-        int i = 0;
-        while (i < inventory.length() - 1) {
-            int endOfItem = inventory.indexOf(DELIMITER, i);
-            String tempItem = inventory.substring(i, endOfItem);
-            i = endOfItem + 1;
-            if (tempItem.equals(item)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean collectTreasure(Treasure treasure) {
-        String item = treasure.getTreasure();
-
-        if (!hasItem(item, treasureCollection)) {
-            treasureCollection += item + DELIMITER;
-            return true;
-        }
-        return false;
-    }
     public void changeGold(int modifier)
     {
         gold += modifier;
@@ -89,7 +67,7 @@ public class Hunter
      */
     public boolean buyItem(String item, int costOfItem)
     {
-        if (costOfItem == 0 || gold < costOfItem || hasItemInKit(item))
+        if (costOfItem == 0 || gold < costOfItem || hasItem(item, kit))
         {
             return false;
         }
@@ -143,7 +121,7 @@ public class Hunter
     /**
      * Checks to make sure that the item is not already in the kit.
      * If not, it adds an item to the end of the String representing the hunter's kit.<br /><br />
-     * A DELIMITER character is added to the end of the of String.
+     * A KIT_DELIMITER character is added to the end of the of String.
      *
      * @param item The item to be added to the kit.
      * @returns true if the item is not in the kit and has been added.
@@ -166,14 +144,14 @@ public class Hunter
      *
      * @return true if the item is found.
      */
-    public boolean hasItemInKit(String item)
+    public boolean hasItem(String item, String inventory)
     {
         int placeholder = 0;
 
-        while (placeholder < kit.length() - 1)
+        while (placeholder < inventory.length() - 1)
         {
-            int endOfItem = kit.indexOf(DELIMITER, placeholder);
-            String tmpItem = kit.substring(placeholder, endOfItem);
+            int endOfItem = inventory.indexOf(DELIMITER, placeholder);
+            String tmpItem = inventory.substring(placeholder, endOfItem);
             placeholder = endOfItem + 1;
             if (tmpItem.equals(item))
             {
@@ -185,7 +163,7 @@ public class Hunter
     }
 
     /** Returns a printable representation of the inventory, which
-     *  is a list of the items in kit, with the DELIMITER replaced with a space
+     *  is a list of the items in kit, with the KIT_DELIMITER replaced with a space
      *
      * @return  The printable String representation of the inventory
      */
@@ -200,14 +178,13 @@ public class Hunter
         return printableTreasure;
     }
 
-    private String replaceDelimiter(String str) {
-        String updatedStr = "";
+    public String replaceDelimiter(String str) {
+        String updatedStr = str;
         String space = " ";
         int index = 0;
-
         while (updatedStr.indexOf(DELIMITER) != -1) {
             index = updatedStr.indexOf(DELIMITER);
-            updatedStr = updatedStr.substring(0,index) + space + updatedStr.substring(index + 1);
+            updatedStr = updatedStr.substring(0, index) + space + updatedStr.substring(index + 1);
         }
         return updatedStr;
     }
@@ -233,7 +210,14 @@ public class Hunter
         return str;
     }
 
+    public boolean collectTreasure(Treasure treasure) {
+        String item = treasure.getType();
 
+        if (!hasItem(item, treasureCollection)) {
+            treasureCollection += item + DELIMITER;
+            return true;
+        }
 
-
+        return false;
+    }
 }

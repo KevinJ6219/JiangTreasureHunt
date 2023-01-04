@@ -120,7 +120,7 @@ public class Town
             printMessage = "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n";
             int goldDiff = (int)(Math.random() * 10) + 1;
             if (toughness == 0.1) {
-                goldDiff = (int) Math.random() * 20) + 1;
+                goldDiff = (int) (Math.random() * 20) + 1;
             }
             if (Math.random() > noTroubleChance)
             {

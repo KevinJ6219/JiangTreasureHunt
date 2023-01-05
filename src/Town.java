@@ -18,7 +18,6 @@ public class Town
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
      * @param shop The town's shoppe.
-     * @param terrain The surrounding terrain.
      */
     public Town(Shop shop, double toughness)
     {
@@ -101,13 +100,15 @@ public class Town
      */
     public void lookForTrouble()
     {
+        int hp1 = 0;
+        int hp2 = 0;
         double noTroubleChance;
         int payment = 0;
         if (toughTown)
         {
             noTroubleChance = 0.66;
         }
-        else if(toughness == 0.1) {
+        else if (toughness == 0.1) {
             noTroubleChance = 0.4;
         }
         else
@@ -127,9 +128,22 @@ public class Town
                 goldDiff = (int) (Math.random() * 20) + 1;
                 payment = (int) (Math.random() * 2) + 1;
             }
+            if (TreasureHunter.isCheatMode()) {
+                payment = 0;
+                goldDiff = 100;
+            }
             if (Math.random() > noTroubleChance)
             {
+                hp1 = ((int) (Math.random() * 100) + 45);
+                hp2 = 0;
                 printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold.";
+                System.out.print("Your HP: ");
+                for (int i = 0;i < hp1; i++) {
+                    System.out.print("|");
+                }
+                System.out.print("          ");
+                System.out.print("Enemy's HP: ");
+                System.out.print("|");
                 printMessage += "\nYou won the brawl and receive " +  goldDiff + " gold.";
                 hunter.changeGold(goldDiff);
             }
@@ -215,4 +229,6 @@ public class Town
         }
 
     }
-}
+
+
+    }

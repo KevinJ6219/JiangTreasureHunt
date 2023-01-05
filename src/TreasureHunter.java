@@ -14,6 +14,7 @@ public class TreasureHunter
     private Hunter hunter;
     private boolean hardMode;
     private boolean easyMode;
+    public static boolean cheatMode;
 
     //Constructor
     /**
@@ -26,6 +27,7 @@ public class TreasureHunter
         hunter = null;
         hardMode = false;
         easyMode = false;
+        cheatMode = false;
     }
 
     // starts the game; this is the only public method
@@ -51,18 +53,18 @@ public class TreasureHunter
         // set hunter instance variable
         hunter = new Hunter(name, 10);
 
-        System.out.print("Hard mode? (y/n): ");
-        String hard = scanner.nextLine();
-        if (hard.equals("y") || hard.equals("Y"))
+        System.out.print("Do you want to change mode to (Hard) or (Easy)? ");
+        String mode = scanner.nextLine().toLowerCase();
+        if (mode.equals("hard") || mode.equals("h"))
         {
             hardMode = true;
         }
-
-        System.out.print("Easy mode? (y/n): ");
-        String easy = scanner.nextLine();
-        if (easy.equals("y") || easy.equals("Y"))
+        if (mode.equals("easy") || mode.equals("e"))
         {
             easyMode = true;
+        }
+        if (mode.equals("treasure") || mode.equals("t")) {
+            cheatMode = true;
         }
     }
 
@@ -85,6 +87,10 @@ public class TreasureHunter
         if (easyMode) {
             markdown = 0;
             toughness = 0.1;
+        }
+        if (cheatMode) {
+            markdown = 0;
+            toughness = 1;
         }
 
         // note that we don't need to access the Shop object
@@ -178,5 +184,8 @@ public class TreasureHunter
         {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
+    }
+    public static boolean isCheatMode() {
+        return cheatMode;
     }
 }

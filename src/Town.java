@@ -102,9 +102,13 @@ public class Town
     public void lookForTrouble()
     {
         double noTroubleChance;
+        int payment = 0;
         if (toughTown)
         {
             noTroubleChance = 0.66;
+        }
+        else if(toughness == 0.1) {
+            noTroubleChance = 0.4;
         }
         else
         {
@@ -121,6 +125,7 @@ public class Town
             int goldDiff = (int)(Math.random() * 10) + 1;
             if (toughness == 0.1) {
                 goldDiff = (int) (Math.random() * 20) + 1;
+                payment = (int) (Math.random() * 2) + 1;
             }
             if (Math.random() > noTroubleChance)
             {
@@ -136,8 +141,8 @@ public class Town
                 }
                 else {
                     printMessage += "That'll teach you to go lookin' fer trouble in MY town! Now pay up!";
-                    printMessage += "\nYou lost the brawl and pay " + goldDiff + " gold.";
-                    hunter.changeGold(-1 * goldDiff);
+                    printMessage += "\nYou lost the brawl and pay " + payment + " gold.";
+                    hunter.changeGold(-1 * payment);
                 }
             }
         }

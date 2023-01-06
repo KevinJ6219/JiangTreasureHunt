@@ -13,7 +13,7 @@ public class TreasureHunter
     private Town currentTown;
     private Hunter hunter;
     private boolean hardMode;
-    private boolean easyMode;
+    public static boolean easyMode;
     public static boolean cheatMode;
 
     //Constructor
@@ -51,7 +51,12 @@ public class TreasureHunter
         String name = scanner.nextLine();
 
         // set hunter instance variable
-        hunter = new Hunter(name, 10);
+        if (easyMode) {
+            hunter = new Hunter(name, 100);
+        }
+        else {
+            hunter = new Hunter(name, 10);
+        }
 
         System.out.print("Do you want to change mode to (Hard) or (Easy)? ");
         String mode = scanner.nextLine().toLowerCase();
@@ -188,4 +193,8 @@ public class TreasureHunter
     public static boolean isCheatMode() {
         return cheatMode;
     }
+    public static boolean isEasyMode() {return easyMode;}
+
 }
+
+

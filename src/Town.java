@@ -3,6 +3,7 @@
  * The Town is designed to manage all of the things a Hunter can do in town.
  * This code has been adapted from Ivan Turner's original program -- thank you Mr. Turner!
  */
+import java.io.*;
 public class Town
 {
     //instance variables
@@ -14,6 +15,9 @@ public class Town
     private Treasure treasure;
     private double toughness;
     private int winCondition;
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
     //Constructor
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
@@ -108,8 +112,11 @@ public class Town
         {
             noTroubleChance = 0.66;
         }
-        else if (toughness == 0.1) {
-            noTroubleChance = 0.4;
+        else if (TreasureHunter.isEasyMode()) {
+            noTroubleChance = 0.20;
+        }
+        else if(TreasureHunter.isCheatMode()) {
+            noTroubleChance = 0.1;
         }
         else
         {
@@ -132,23 +139,37 @@ public class Town
                 payment = 0;
                 goldDiff = 100;
             }
+            if (TreasureHunter.isEasyMode()) {
+                payment = 0;
+                goldDiff = (int) (Math.random() * 30) + 15;
+            }
             if (Math.random() > noTroubleChance)
             {
-                hp1 = ((int) (Math.random() * 100) + 45);
+                hp1 = ((int) (Math.random() * 55));
                 hp2 = 0;
-                printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold.";
                 System.out.print("Your HP: ");
                 for (int i = 0;i < hp1; i++) {
-                    System.out.print("|");
+                    System.out.print(ANSI_GREEN + "|" + ANSI_RESET);
                 }
                 System.out.print("          ");
                 System.out.print("Enemy's HP: ");
-                System.out.print("|");
+                System.out.print(ANSI_RED + "|" + ANSI_RESET);
+                printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold.";
                 printMessage += "\nYou won the brawl and receive " +  goldDiff + " gold.";
                 hunter.changeGold(goldDiff);
             }
             else
             {
+                hp1 = 0;
+                hp2 = (int) (Math.random() * 55);
+                System.out.print("Your HP: ");
+                System.out.print(ANSI_RED + "|" + ANSI_RESET);
+                System.out.print("          ");
+                System.out.print("Enemy's HP: ");
+                for (int i = 0;i < hp2; i++) {
+                    System.out.print(ANSI_GREEN + "|" + ANSI_RESET);
+                }
+                System.out.println();
                 if (hunter.getGold() - goldDiff < 0) {
                     printMessage += "What?! You don't have enough to pay up? Guess your time is up!";
                     winCondition = 2;
@@ -175,25 +196,28 @@ public class Town
     private Terrain getNewTerrain()
     {
         double rnd = Math.random();
-        if (rnd < .2)
+        if (rnd < .16)
         {
             return new Terrain("Mountains", "Rope");
         }
-        else if (rnd < .4)
+        else if (rnd < .32)
         {
             return new Terrain("Ocean", "Boat");
         }
-        else if (rnd < .6)
+        else if (rnd < .48)
         {
             return new Terrain("Plains", "Horse");
         }
-        else if (rnd < .8)
+        else if (rnd < .64)
         {
             return new Terrain("Desert", "Water");
         }
-        else
+        else if (rnd < .80)
         {
             return new Terrain("Jungle", "Machete");
+        }
+        else {
+            return new Terrain("Lost City", "Axe");
         }
     }
 
@@ -203,8 +227,7 @@ public class Town
      */
     private boolean checkItemBreak()
     {
-        double rand = Math.random();
-        return (rand < 0.5);
+        return true;
     }
 
     public void huntForTreasure() {

@@ -13,10 +13,13 @@ public class Shop
     private static int MACHETE_COST = 6;
     private static int HORSE_COST = 12;
     private static int BOAT_COST = 20;
+    private static int AXE_COST = 35;
+
 
     // instance variables
     private double markdown;
     private Hunter customer;
+    private double discount = 0.6;
 
     //Constructor
     public Shop(double markdown)
@@ -29,7 +32,15 @@ public class Shop
             MACHETE_COST = 1 ;
             HORSE_COST = 1;
             BOAT_COST = 1;
-
+            AXE_COST = 1;
+        }
+        if (TreasureHunter.isEasyMode()) {
+            WATER_COST *= discount;
+            ROPE_COST *= discount;
+            MACHETE_COST *= discount ;
+            HORSE_COST *= discount;
+            BOAT_COST *= discount;
+            AXE_COST *= discount;
         }
     }
 
@@ -49,6 +60,7 @@ public class Shop
             System.out.println(inventory());
             System.out.print("What're you lookin' to buy? ");
             String item = scanner.nextLine();
+            item = findItem(item);
             int cost = checkMarketPrice(item, true);
             if (cost == 0)
             {
@@ -70,6 +82,7 @@ public class Shop
             System.out.println("What're you lookin' to sell? ");
             System.out.print("You currently have the following items: " + customer.getInventory());
             String item = scanner.nextLine();
+
             int cost = checkMarketPrice(item, false);
             if (cost == 0)
             {
@@ -99,6 +112,7 @@ public class Shop
         str += "Machete(M): " + MACHETE_COST + " gold\n";
         str += "Horse(H): " + HORSE_COST + " gold\n";
         str += "Boat(B): " + BOAT_COST + " gold\n";
+        str += "Axe(A): " + AXE_COST + " gold\n";
 
         return str;
     }
@@ -184,6 +198,9 @@ public class Shop
         {
             return BOAT_COST;
         }
+        else if (input.equals("axe") || input.equals("a")) {
+            return AXE_COST;
+        }
         else
         {
             return 0;
@@ -200,5 +217,37 @@ public class Shop
     {
         int cost = (int)(getCostOfItem(item) * markdown);
         return cost;
+    }
+
+    public String findItem(String item)
+    {
+        String input = item.toLowerCase();
+        if (input.equals("w"))
+        {
+            return "Water";
+        }
+        else if (input.equals("r"))
+        {
+            return "Rope";
+        }
+        else if (input.equals("m"))
+        {
+            return "Machete";
+        }
+        else if (input.equals("h"))
+        {
+            return "Horse";
+        }
+        else if (input.equals("b"))
+        {
+            return "Boat";
+        }
+        else if (input.equals("a")) {
+            return "Axe";
+        }
+        else
+        {
+            return item;
+        }
     }
 }
